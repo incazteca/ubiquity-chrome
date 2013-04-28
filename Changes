@@ -1,6 +1,10 @@
 Ubiquity for Chrome - List of changes
 
-2010-09-06
+2010-09-06 (Cosimo Streppone)
     - First version, released to the unsuspecting world.
       Lacks Ajax capabilities, but GM_xmlhttprequest() should be there.
 
+2013-04-28 (Franco Reyes)
+	- Picking up development because I want ubiquity on Chrome. So I forked this. Thanks Cosimo!
+	- Brought in manifest and html page to be able to create extension
+	- Fixing up Docs provided
