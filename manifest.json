@@ -1,5 +1,5 @@
 {
-  "manifest_version": 1,
+  "manifest_version": 2,
 
   "name": "Ubiquity",
   "description": "A Chrome port of Mozilla's Ubiquity",
