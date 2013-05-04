@@ -5,8 +5,18 @@
 	<script src="js/ubiquity-chrome.user.js"></script>
 	<style>
 	</style>
-	</head>
-	<body>
-		<textarea autofocus></textarea>
-	</body>
+</head>
+<body>
+    <div id="ubiq-input-panel">
+        <form id="ubiq1" onsubmit="return false">
+            <input autocomplete="off" id="ubiq_input" type="text" size="60" maxlength="500">
+        </form>
+    </div>
+    <br/>
+    <div id="ubiq-results-panel">
+        <p>Type the name of a command and press enter to execute it, or <b>help</b> for assistance.</p>
+    </div>
+    <div id="ubiq-command-tip"></div>
+    <div id="ubiq-command-preview"></div>
+</body>
 </html>
