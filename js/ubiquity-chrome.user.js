@@ -116,53 +116,6 @@
         return url;
     }
 
-    function ubiq_create_window () {
-        var doc = window.document;
-        var wnd = document.createElement('div');
-        var stl = wnd.style;
-        wnd.setAttribute('id', 'ubiq_window');
-        stl.position='fixed';
-        stl.left='1px';
-        stl.top='1px';
-        stl.visibility='hidden';
-        stl.width='810px';
-        stl.height='561px';
-        stl.border='0';
-        stl.padding='0';
-        // Our window should appear on top of everything 
-        stl.zIndex='99999';
-        stl.background = ubiq_url_for('ubiq_background.png');
-        wnd.innerHTML = ubiq_start_mode();
-        doc.body.appendChild(wnd);
-        return wnd;
-    }
-
-    function ubiq_start_mode () {
-        var input_style =
-               'border:0; padding:0; height:32px; margin-top:16px;'
-             + 'margin-left:10px; background:none; color:black;'
-             + 'font-family: Trebuchet MS, Arial, Helvetica; font-size: 28px;';
-        var div_style = 'border:0; display:block; float:left; margin:0;';
-        var results_panel_style = div_style +
-              'clear:both; text-align: left; padding-top:2px; font-size: 19px; '
-            + 'font-weight: normal; color:white; height: 502px;';
-
-        var html =
-              '<div id="ubiq-input-panel" style="' + div_style + ';width:99%;height:55px">'
-            + '<form id="ubiq1" onsubmit="return false">'
-            + '<input autocomplete="off" id="ubiq_input" style="' + input_style +'" type="text" size="60" maxlength="500">'
-            + '</form>'
-            + '</div>'
-            + '<br/>'
-            + '<div id="ubiq-results-panel" style="width:100%;' + results_panel_style + '">'
-            + ubiq_help()
-            + '</div>'
-            + '<div id="ubiq-command-tip" style="position:absolute;left:310px;top:65px;display:block;border:0;color:#ddd;font-family:Helvetica,Arial;font-style:italic;font-size:11pt"></div>'
-            + '<div id="ubiq-command-preview" style="position:absolute;left:310px;top:85px;display:block;overflow:auto;border:0;color:#ddd;"></div>'
-            ;
-        return html;
-    }
-
     function ubiq_show_preview (cmd) {
         var el = document.getElementById('ubiq-command-preview');
         if (! el) return;
@@ -259,12 +212,6 @@
         div.style.visibility='show';
     }
 
-    function ubiq_help () {
-        var style = 'font-size:17px; padding:8px; font-weight:normal';
-        var html = '<p style="' + style + '">Type the name of a command and press enter to execute it, or <b>help</b> for assistance.</p>';
-        return html;
-    }
-
     function ubiq_get_selection () {
         var str = '';
         //if (document.getSelection) {
@@ -298,14 +245,6 @@
         el.setSelectionRange(0, el.value.length);
       }
       el.focus();
-    }
-
-    function ubiq_enabled () {
-        var wnd = ubiq_window;
-        if (! wnd) return;
-        var vis = wnd.style.visibility;
-        if (vis=='hidden') return false;
-        return true;
     }
 
     function ubiq_command () {
@@ -463,7 +402,7 @@
 
         return;
     }
-
+    // TODO Work in key handler
     function ubiq_key_handler (userjs_event) {
         if (!userjs_event) return;
         var ev = userjs_event;
@@ -472,54 +411,40 @@
         // afterEvent.keyUp ctrlKey is always false on Opera 9.63 on Linux (?)
         var ctrl_space_pressed = (kc==32) && (ev.ctrlKey || ev.metaKey);
 
-        // If we're in the background (or not created), return immediately
-        // Otherwise, activate only on CTRL + Space
-        if (! ubiq_enabled()) {
-
-            // Create our window if not already done 
-            if (! ubiq_window) {
-                ubiq_window = ubiq_create_window();
-            }
-
-            if (ctrl_space_pressed) {
-                // Get text selection before switching window focus
-                ubiq_get_selection();
-                ubiq_get_current_element();
-                ubiq_toggle_window();
-                ubiq_focus();
-            }
+        if (ctrl_space_pressed) {
+            // Get text selection before switching window focus
+            ubiq_get_selection();
+            ubiq_get_current_element();
+            ubiq_toggle_window();
+            ubiq_focus();
+        }
+    
+        if (ctrl_space_pressed) {
+            ubiq_toggle_window();
+            return;
         }
 
-        else {
-
-            if (ctrl_space_pressed) {
-                ubiq_toggle_window();
-                return;
-            }
-
-            // On ENTER, execute the given command
-            if (kc==13) {
-                ubiq_execute();
-                return;
-            }
-
-            // ESC, hide the Ubiquity window
-            if (kc==27) {
-                ubiq_toggle_window();
-            }
-
-            // Cursor up
-            if (kc==38) {
-                ubiq_select_prev_command();
-            }
-            // Cursor Down
-            else if (kc==40) {
-                ubiq_select_next_command();
-            }
-
-            ubiq_show_matching_commands();
+        // On ENTER, execute the given command
+        if (kc==13) {
+            ubiq_execute();
+            return;
         }
 
+        // ESC, hide the Ubiquity window
+        if (kc==27) {
+            ubiq_toggle_window();
+        }
+
+        // Cursor up
+        if (kc==38) {
+            ubiq_select_prev_command();
+        }
+        // Cursor Down
+        else if (kc==40) {
+            ubiq_select_next_command();
+        }
+
+        ubiq_show_matching_commands();
     }
 
     function ubiq_select_prev_command () {
