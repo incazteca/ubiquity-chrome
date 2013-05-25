@@ -1237,7 +1237,8 @@
         )
     });
 
-    // Add event handler to window 
+    // Event handlers
+    document.addEventListener('submit', function (e) { e.preventDefault(); ubiq_execute(); });
     document.addEventListener('keyup', function (e) { ubiq_key_handler(e) }, false);
 
 }) ();
