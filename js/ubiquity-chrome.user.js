@@ -69,7 +69,7 @@
             text = encodeURIComponent(text);
             url = url.replace('{text}', text);
             url = url.replace('{location}', CmdUtils.getLocation());
-            CmdUtils.toggleUbiquityWindow();
+            //CmdUtils.toggleUbiquityWindow();
             Utils.openUrlInBrowser(url);
         };
         return search_func;
