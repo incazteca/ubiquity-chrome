@@ -1,3 +1,12 @@
+--------------------------------------------------
+A continuation of the attempt to rewrite Firefox's 
+Ubiquity extension for Google Chrome this time, 
+using jQuery.
+--------------------------------------------------
+
+Below is the original README from the code this forks off
+of.
+
 ----------------------------------------------
 An attempt to rewrite Firefox's Ubiquity extension
 for Google Chrome this time, using UserJS.

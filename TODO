@@ -1,7 +1,6 @@
 Lots of problems!
 
-* Lacks xmlHttpRequest support,
-  but GM_xmlhttprequest() should be available.
+* Work at getting existing javascript to work.(First priority)
 
 * Style is less than awesome.
 
